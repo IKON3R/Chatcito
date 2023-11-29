@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Sala de chat</title>
+    <style>
+      /* Estilos generales */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #333; /* Cambiar el color de fondo aquí */
+        color: #0002; /* Cambiar el color del texto si es necesario */
+      }
+
+      .loader {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .main-container {
+        display: flex;
+        justify-content: space-between;
+        margin: 20px;
+      }
+
+      .text-container {
+        flex-grow: 1;
+        background-color: #2C5199;
+        border-radius: 5px;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .mensajes-container {
+        height: 300px;
+        overflow-y: auto;
+        margin-bottom: 15px;
+        background-color: #5F7D82; /* Cambiar el color de fondo de los mensajes */
+        border-radius: 5px;
+        padding: 10px;
+      }
+
+      .input-chat {
+        display: flex;
+      }
+
+      .input-chat input[type="text"] {
+        flex-grow: 1;
+        padding: 10px;
+        border-radius: 3px;
+        border: 1px solid #ccc;
+      }
+
+      .user-list {
+        font-family: 'Itim', cursive;
+        color: #000000b6;
+        flex-basis: 30%;
+        background-color: #585B76;
+        border-radius: 5px;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .user-list h3 {
+        margin-top: 0;
+      }
+
+      .divider {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        border: 0;
+        border-top: 1px solid #000;
+      }
+
+      /* Estilos de los mensajes */
+      .local-message {
+        font-family: 'Itim', cursive;
+        background-color: #992728;
+        color: #000;
+        padding: 5px;
+        border-radius: 5px;
+        margin-bottom: 5px;
+      }
+
+      .remote-message {
+        font-family: 'Itim', cursive;
+        background-color: #885465;
+        color: #000;
+        padding: 5px;
+        border-radius: 5px;
+        margin-bottom: 5px;
+      }
+
+      /* Estilos del botón */
+      button {
+        padding: 10px 20px;
+        background-color: #662D2E;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #662739;
+      }
+        /* Estilo para la animación del nuevo mensaje */
+  @keyframes slideIn {
+    from {
+      transform: translateX(20px); /* Desplazamiento inicial */
+      opacity: 0; /* Comienza con opacidad cero */
+    }
+    to {
+      transform: translateX(0); /* Sin desplazamiento al final */
+      opacity: 1; /* Opacidad completa al final */
+    }
+  }
+
+  /* Aplicar animación a los nuevos mensajes remotos */
+  .remote-message {
+    animation: slideIn 1s ease forwards;
+  }
+    </style>
+    <script>
+      // En tu script existente...
+      socket.on('mensaje', function (data) {
+        // ... (código existente) ...
+    
+        if (data.id != socket.id) {
+          var sanitized = data.msg.replace(/<\/?[^>]+(>|$)/g, ""); // Remover etiquetas HTML
+          var messageContainer = document.querySelector('.mensajes-container');
+          var newMessage = document.createElement('div');
+          newMessage.classList.add('remote-message', 'new-message'); // Agregar la clase 'new-message'
+          newMessage.innerHTML = `
+            <strong>${data.username}: </strong>
+            <p>${sanitized}</p>
+          `;
+          messageContainer.appendChild(newMessage);
+    
+          // Desplazar el contenedor al último mensaje recibido con la nueva clase aplicada
+          messageContainer.scrollTop = messageContainer.scrollHeight;
+        }
+      });
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
+  </head>
+  <body style="overflow: hidden;">
+    <div class="loader">
+      <button type="button" onclick="conectarChat()">Conectarse</button>
+    </div>
+    <div class="main-container">
+      <div class="text-container">
+        <div class="mensajes-container">
+        </div>
+        <div class="input-chat">
+          <input type="text" id="input" placeholder="Mensaje..." onkeypress="enviarMensaje(event)">
+        </div>
+      </div>
+      <div class="user-list">
+        <h3>Lista de usuarios:</h3>
+        <hr class="divider">
+        <ol id="lista-users"></ol>
+      </div>
+    </div>
+    <script src="/js/jq.js" charset="utf-8"></script>
+    <script src="/js/socket.io.js"></script>
+    <script src="/js/logica.js" charset="utf-8"></script>
+  </body>
+</html>
