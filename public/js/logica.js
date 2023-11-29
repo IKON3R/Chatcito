@@ -1,4 +1,4 @@
-var socket = oi.connect('https://chat-9buh.onrender.com/:443');
+var socket = oi.connect('http://localhost:8080');
 var list = document.querySelector('#lista-users');
 var username = window.location.pathname.replace('/chat/', '');
 var clientes = [];
