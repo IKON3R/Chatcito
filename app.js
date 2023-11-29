@@ -9,7 +9,7 @@ var clientes = [];
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-server.listen(443, '0.0.0.0', () => console.log('Servidor iniciado en 443'));
+server.listen(8080, '0.0.0.0', () => console.log('Servidor iniciado en 8080'));
 
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/public/index.html');
