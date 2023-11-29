@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 var app = require('express')();
-var server = require('http').Server(app);
+var server = require('https').Server(app);
 var io = require('socket.io')(server);
 
 var clientes = [];
@@ -9,7 +9,7 @@ var clientes = [];
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-server.listen(8080, '0.0.0.0', () => console.log('Servidor iniciado en 8080'));
+server.listen(443, '0.0.0.0', () => console.log('Servidor iniciado en 443'));
 
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/public/index.html');
