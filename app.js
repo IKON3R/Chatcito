@@ -1,12 +1,8 @@
 // Importación de módulos necesarios
 const express = require('express');
 const bodyParser = require('body-parser');
-
-// Creación de la aplicación Express
 var app = require('express')();
-// Creación del servidor HTTPS con Express
-var server = require('https').Server(app);
-// Inicialización de Socket.IO en el servidor
+var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
 // Arreglo para almacenar los clientes conectados
@@ -17,7 +13,7 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 // Configuración del servidor para escuchar en el puerto 443
-server.listen('0.0.0.0', () => console.log('Servidor iniciado'));
+server.listen(8080, '0.0.0.0', () => console.log('Servidor iniciado en 8080'));
 
 // Ruta para la página principal
 app.get('/', function (req, res) {
