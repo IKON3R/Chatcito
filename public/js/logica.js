@@ -1,4 +1,4 @@
-var socket = io.connect('http://http://localhost:8080//');
+var socket = io.connect('http://http://localhost:443//');
 var list = document.querySelector('#lista-users');
 var username = window.location.pathname.replace('/chat/', '');
 // Arreglo para almacenar los clientes conectados
