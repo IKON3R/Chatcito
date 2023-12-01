@@ -13,7 +13,7 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 // Configuración del servidor para escuchar en el puerto 443
-server.listen(8080, '0.0.0.0', () => console.log('Servidor iniciado en 8080'));
+server.listen('0.0.0.0', () => console.log('Servidor iniciado en 8080'));
 
 // Ruta para la página principal
 app.get('/', function (req, res) {
