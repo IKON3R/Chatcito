@@ -1,6 +1,4 @@
-// Conexión al servidor de Socket.IO en la dirección proporcionada
-var socket = io.connect('https://chat-9buh.onrender.com');
-// Selección del elemento de lista de usuarios y obtención del nombre de usuario desde la URL
+var socket = io.connect('https://chat-9buh.onrender.com:443/');
 var list = document.querySelector('#lista-users');
 var username = window.location.pathname.replace('/chat/', '');
 // Arreglo para almacenar los clientes conectados
